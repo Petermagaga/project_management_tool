@@ -1,13 +1,14 @@
 from decouple import config
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = True
 
+SECRET_KEY = config('SECRET_KEY')
 ALLOWED_HOSTS = []
 
-
+DEBUG = True
 # Application definition
 INSTALLED_APPS = [
 
@@ -95,12 +96,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE":"django.db.backends.postgresql",
-        "NAME":config('DB_NAME'),
-        "USER":config("DB_USER"),
-        "PASSWORD":config('DB_PASSWORD'),
-        "HOST":config('DB_HOST'),
-        "PORT":config('DB_PORT')
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
