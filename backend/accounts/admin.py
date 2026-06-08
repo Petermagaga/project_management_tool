@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from django.contrib.auth.admin import UserAdmin
 
 from .models import User
@@ -20,7 +19,6 @@ class CustomUserAdmin(UserAdmin):
     ordering = ("email",)
 
     fieldsets = (
-
         (None, {
             "fields": (
                 "email",
@@ -54,6 +52,20 @@ class CustomUserAdmin(UserAdmin):
                 "created_at",
                 "updated_at",
             )
+        }),
+    )
+
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": (
+                "email",
+                "username",
+                "password1",
+                "password2",
+                "is_staff",
+                "is_superuser",
+            ),
         }),
     )
 
