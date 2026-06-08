@@ -46,3 +46,19 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data["password"]
         )
     
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password=serializers.CharField()
+    new_password=serializers.CharField(
+        min_length=8
+    )
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=[
+            "first_name",
+            "last",
+            "bio",
+            "job title",
+            "avatar"
+        ]
