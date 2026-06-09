@@ -5,7 +5,7 @@ from .models import (
 )
 
 
-class WorkspaceSerializers(serializers.Serializer):
+class WorkspaceSerializer(serializers.Serializer):
     owner=serializers.StringRelatedField()
     class Meta:
         model=Workspace
