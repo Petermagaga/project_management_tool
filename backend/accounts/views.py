@@ -45,6 +45,10 @@ class UpdateProfileView(APIView):
 
 
         serializer.save()
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
 
 
 class ChangePasswordView(APIView):
@@ -60,7 +64,7 @@ class ChangePasswordView(APIView):
         )
 
         user=request.user
-        if not user.checkpassword(
+        if not user.check_password(
             serializer.validated_data["old_password"]
         ):
             return Response(

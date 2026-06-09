@@ -57,8 +57,8 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         model=User
         fields=[
             "first_name",
-            "last",
+            "last_name",
             "bio",
-            "job title",
+            "job_title",
             "avatar"
         ]
