@@ -1,22 +1,52 @@
 from django.urls import path
-from .views import(
+
+from .views import (
+
     RegisterView,
+
     CurrentUserView,
+
     UpdateProfileView,
-    ChangePasswordView
+
+    ChangePasswordView,
 )
-from rest_framework_simplejwt.views import(
+
+from rest_framework_simplejwt.views import (
+
+    TokenObtainPairView,
+
     TokenRefreshView,
-    TokenObtainPairView
 )
 
 urlpatterns = [
-    path("register/",RegisterView.as_view()),
-    path("login/",TokenObtainPairView.as_view()),
-    path("refresh/",TokenRefreshView.as_view()),
-    path("me/",CurrentUserView.as_view()),
-    path("profile/update/",UpdateProfileView.as_view()),
-    path("change-password/",ChangePasswordView.as_view()),
-    
-]
 
+    path(
+        "register/",
+        RegisterView.as_view()
+    ),
+
+    path(
+        "login/",
+        TokenObtainPairView.as_view()
+    ),
+
+    path(
+        "refresh/",
+        TokenRefreshView.as_view()
+    ),
+
+    path(
+        "me/",
+        CurrentUserView.as_view()
+    ),
+
+    path(
+        "profile/update/",
+        UpdateProfileView.as_view()
+    ),
+
+    path(
+        "change-password/",
+        ChangePasswordView.as_view()
+    ),
+]
