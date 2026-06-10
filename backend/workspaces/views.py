@@ -122,3 +122,31 @@ class InviteMemberView(
                 "Member invited"
             }
         )
+    
+
+class WorkspaceMembersView(
+    APIView
+):
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def get(
+        self,
+        request,
+        workspace_id
+    ):
+
+        members = WorkspaceMember.objects.filter(
+            workspace_id=workspace_id
+        )
+
+        serializer = WorkspaceMemberSerializer(
+            members,
+            many=True
+        )
+
+        return Response(
+            serializer.data
+        )
