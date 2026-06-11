@@ -67,3 +67,117 @@ class CreateProjectView(
         serializer.save(
             created_by=self.request.user
         )
+
+
+class WorkspaceProjectsView(
+    APIView
+):
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def get(
+        self,
+        request,
+        workspace_id
+    ):
+
+        projects = Project.objects.filter(
+            workspace_id=workspace_id
+        )
+
+        serializer = ProjectSerializer(
+            projects,
+            many=True
+        )
+
+        return Response(
+            serializer.data
+        )
+    
+
+class ProjectDetailView(APIView):
+
+    permission_classes = [
+        IsAuthenticated]
+
+    def get(self,request,project_id):
+
+        project = get_object_or_404(
+            Project,
+            id=project_id
+        )
+
+        serializer = ProjectSerializer(
+            project
+        )
+
+        return Response(
+            serializer.data
+        )
+
+
+class UpdateProjectView(
+    APIView
+):
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def put(
+        self,
+        request,
+        project_id
+    ):
+
+        project = get_object_or_404(
+            Project,
+            id=project_id
+        )
+
+        serializer = ProjectSerializer(
+            project,
+            data=request.data,
+            partial=True
+        )
+
+        serializer.is_valid(
+            raise_exception=True
+        )
+
+        serializer.save()
+
+        return Response(
+            serializer.data
+        )
+    
+
+class DeleteProjectView(
+    APIView
+):
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def delete(
+        self,
+        request,
+        project_id
+    ):
+
+        project = get_object_or_404(
+            Project,
+            id=project_id
+        )
+
+        project.delete()
+
+        return Response(
+            {
+                "message":
+                "Project deleted"
+            }
+        )
