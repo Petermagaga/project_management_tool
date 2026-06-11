@@ -6,7 +6,8 @@ class Board(models.Model):
     project=models.ForeignKey(Project,on_delete=models.CASCADE,related_name="boards")
     name=models.CharField(max_length=255)
     position=models.PositiveBigIntegerField(default=0)
-    
+    color=models.CharField(max_length=20,blank=True)
+    is_default=models.BooleanField(default=False)
     create_at=models.DateTimeField(auto_now_add=True)
 
 
