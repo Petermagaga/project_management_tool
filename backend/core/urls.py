@@ -10,6 +10,7 @@ urlpatterns = [
     path("api/projects/",include("projects.urls")),
     path("api/boards/",include ("boards.urls")),
     path("api/tasks/",include("tasks.urls")),
+    path("/api/comments/",include("comments.urls"))
 ]
 
 
