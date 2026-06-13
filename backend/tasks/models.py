@@ -21,13 +21,14 @@ class Task(models.Model):
         null=True,blank=True,related_name="assigned_tasks"
     )
     reporter=models.ForeignKey(
-        settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,related_name="reporter_tasks"
+        settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,null=True, related_name="reporter_tasks"
     )
 
     due_date=models.DateField(
         null=True,blank=True
     )
-
+    estimated_hours=models.PositiveIntegerField(default=0)
+    labels=models.JSONField(default=list,blank=True)
     position=models.PositiveIntegerField( default=0)
     created_at=models.DateTimeField(auto_now=True)
 
@@ -35,6 +36,4 @@ class Task(models.Model):
         ordering=["position"]
     
     def __str__(self):
-        return self.title
-
-
+        return self.title 
