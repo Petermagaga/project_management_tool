@@ -1,3 +1,25 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import ActivityLog
+
+
+@admin.register(ActivityLog)
+class ActivityLogAdmin(admin.ModelAdmin):
+
+    list_display = (
+
+        "id",
+
+        "project",
+
+        "user",
+
+        "action_type",
+
+        "created_at",
+    )
+
+    list_filter = (
+
+        "action_type",
+    )
