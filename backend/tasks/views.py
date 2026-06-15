@@ -36,8 +36,22 @@ class CreateTaskView(
         serializer
     ):
 
-        serializer.save(
+        task = serializer.save(
             reporter=self.request.user
+        )
+
+        create_activity_log(
+
+            project=task.project,
+
+            user=self.request.user,
+
+            action_type="TASK_CREATED",
+
+            message=(
+                f"{self.request.user.username} "
+                f"created task '{task.title}'"
+            )
         )
 
 

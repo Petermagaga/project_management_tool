@@ -15,6 +15,8 @@ from tasks.models import Task
 from .models import Comment
 from .serializers import CommentSerializer
 
+from notifications.services import (create_activity_log)
+
 
 class CreateCommentView(
     generics.CreateAPIView
@@ -31,8 +33,23 @@ class CreateCommentView(
         serializer
     ):
 
-        serializer.save(
+        comment = serializer.save(
             user=self.request.user
+        )
+
+        create_activity_log(
+
+            project=comment.task.project,
+
+            user=self.request.user,
+
+            action_type="COMMENT_CREATED",
+
+            message=(
+                f"{self.request.user.username} "
+                f"commented on "
+                f"'{comment.task.title}'"
+            )
         )
 
 
