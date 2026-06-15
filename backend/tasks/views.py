@@ -17,6 +17,10 @@ from .models import Task
 from .serializers import TaskSerializer
 
 
+from notifications.services import (
+    create_activity_log
+)
+
 class CreateTaskView(
     generics.CreateAPIView
 ):

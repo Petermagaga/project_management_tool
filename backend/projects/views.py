@@ -14,6 +14,10 @@ from workspaces.models import (
     Workspace
 )
 
+from notifications.services import (
+    create_activity_log
+)
+
 from workspaces.permissions import (
     get_user_role
 )
@@ -63,10 +67,18 @@ class CreateProjectView(
             raise PermissionError(
                 "Permission denied"
             )
-
-        serializer.save(
+    
+        project = serializer.save(
             created_by=self.request.user
         )
+
+        create_activity_log(
+            project=project,
+            user=self.request.user,
+            action_type="PROJECT_CREATED",
+            message=f"{self.request.user.username} created project '{project.name}'"
+        )
+
 
 
 class WorkspaceProjectsView(
