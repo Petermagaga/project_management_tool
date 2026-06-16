@@ -12,9 +12,10 @@ from django.shortcuts import get_object_or_404
 
 from boards.models import Board
 
-from .models import Task
+from .models import Task,TaskAttachment
 
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer,TaskAttachmentSerializer
+
 
 
 from notifications.services import (
@@ -174,7 +175,109 @@ class DeleteTaskView(
             }
         )
     
+    
+
+class UploadAttachmentView(
+    generics.CreateAPIView
+):
+
+    serializer_class = (
+        TaskAttachmentSerializer
+    )
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def perform_create(
+        self,
+        serializer
+    ):
+
+        uploaded_file = (
+            self.request.FILES["file"]
+        )
+
+        attachment = serializer.save(
+
+            uploaded_by=self.request.user,
+
+            original_filename=uploaded_file.name
+        )
+
+        create_activity_log(
+
+            project=attachment.task.project,
+
+            user=self.request.user,
+
+            action_type="TASK_UPDATED",
+
+            message=(
+                f"{self.request.user.username} "
+                f"uploaded file "
+                f"'{uploaded_file.name}'"
+            )
+        )
 
 
+class TaskAttachmentsView(
+    APIView
+):
 
+    permission_classes = [
+        IsAuthenticated
+    ]
 
+    def get(
+        self,
+        request,
+        task_id
+    ):
+
+        attachments = (
+            TaskAttachment.objects.filter(
+                task_id=task_id
+            )
+        )
+
+        serializer = (
+            TaskAttachmentSerializer(
+                attachments,
+                many=True
+            )
+        )
+
+        return Response(
+            serializer.data
+        )
+
+class DeleteAttachmentView(
+    APIView
+):
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def delete(
+        self,
+        request,
+        attachment_id
+    ):
+
+        attachment = get_object_or_404(
+
+            TaskAttachment,
+
+            id=attachment_id
+        )
+
+        attachment.delete()
+
+        return Response(
+            {
+                "message":
+                "Attachment deleted"
+            }
+        )
