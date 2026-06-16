@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'comments',
     'notifications',
     'analytics_app',
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -104,6 +105,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+CHANNEL_LAYERS = {
+
+    "default": {
+
+        "BACKEND": (
+            "channels_redis.core.RedisChannelLayer"
+        ),
+
+        "CONFIG": {
+
+            "hosts": [
+                ("127.0.0.1", 6379)
+            ]
+        }
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -170,3 +188,5 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 AUTH_USER_MODEL = "accounts.User"
+
+ASGI_APPLICATION = "core.asgi.application"
