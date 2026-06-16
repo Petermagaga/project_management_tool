@@ -15,7 +15,7 @@ from tasks.models import Task
 from .models import Comment
 from .serializers import CommentSerializer
 
-from notifications.services import (create_activity_log)
+from notifications.services import (create_activity_log,create_notification)
 
 
 class CreateCommentView(
@@ -51,6 +51,28 @@ class CreateCommentView(
                 f"'{comment.task.title}'"
             )
         )
+
+        if comment.task.assignee:
+
+            if (
+                comment.task.assignee
+                != self.request.user
+            ):
+
+                create_notification(
+
+                    recipient=comment.task.assignee,
+
+                    sender=self.request.user,
+
+                    notification_type="TASK_COMMENT",
+
+                    message=(
+                        f"{self.request.user.username} "
+                        f"commented on "
+                        f"'{comment.task.title}'"
+                    )
+                )
 
 
 class TaskCommentsView(

@@ -19,7 +19,7 @@ from .serializers import TaskSerializer,TaskAttachmentSerializer
 
 
 from notifications.services import (
-    create_activity_log
+    create_activity_log,create_notification
 )
 
 class CreateTaskView(
@@ -40,6 +40,23 @@ class CreateTaskView(
         task = serializer.save(
             reporter=self.request.user
         )
+
+
+        if task.assignee:
+
+            create_notification(
+
+                recipient=task.assignee,
+
+                sender=self.request.user,
+
+                notification_type="TASK_ASSIGNED",
+
+                message=(
+                    f"You were assigned "
+                    f"'{task.title}'"
+                )
+            )
 
         create_activity_log(
 
