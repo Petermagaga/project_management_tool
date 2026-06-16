@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ActivityLog
+from .models import ActivityLog,Notification
 
 
 class ActivityLogSerializer(
@@ -15,5 +15,21 @@ class ActivityLogSerializer(
     class Meta:
 
         model = ActivityLog
+
+        fields = "__all__"
+
+
+class NotificationSerializer(
+    serializers.ModelSerializer
+):
+
+    sender_email = serializers.CharField(
+        source="sender.email",
+        read_only=True
+    )
+
+    class Meta:
+
+        model = Notification
 
         fields = "__all__"
