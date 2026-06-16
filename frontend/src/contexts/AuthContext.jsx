@@ -5,9 +5,12 @@ import {
   useState,
 } from "react";
 
-import { getCurrentUser } from "../api/authApi";
+import {
+  getCurrentUser,
+} from "../api/authApi";
 
-const AuthContext = createContext();
+const AuthContext =
+  createContext();
 
 export const AuthProvider = ({
   children,
@@ -19,40 +22,75 @@ export const AuthProvider = ({
   const [loading, setLoading] =
     useState(true);
 
+  const fetchUser = async () => {
+
+    try {
+
+      const res =
+        await getCurrentUser();
+
+      setUser(res.data);
+
+    } catch {
+
+      setUser(null);
+
+    } finally {
+
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
 
-    const fetchUser = async () => {
+    const token =
+      localStorage.getItem(
+        "access"
+      );
 
-      try {
+    if (token) {
 
-        const res =
-          await getCurrentUser();
+      fetchUser();
 
-        setUser(res.data);
+    } else {
 
-      } catch {
-
-        setUser(null);
-
-      } finally {
-
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
+      setLoading(false);
+    }
 
   }, []);
 
+  const logout = () => {
+
+    localStorage.removeItem(
+      "access"
+    );
+
+    localStorage.removeItem(
+      "refresh"
+    );
+
+    setUser(null);
+  };
+
   return (
+
     <AuthContext.Provider
       value={{
+
         user,
+
         setUser,
+
+        fetchUser,
+
+        logout,
+
         loading,
       }}
     >
+
       {children}
+
     </AuthContext.Provider>
   );
 };
