@@ -32,6 +32,11 @@ class Task(models.Model):
     position=models.PositiveIntegerField( default=0)
     created_at=models.DateTimeField(auto_now=True)
 
+    status = models.CharField(
+        max_length=50,
+        default="Backlog"
+    )
+
     class Meta:
         ordering=["position"]
     
