@@ -10,7 +10,8 @@ from .views import (
 
     UpdateTaskView,
 
-    DeleteTaskView
+    DeleteTaskView,
+    TaskAttachmentsView,DeleteAttachmentView,UploadAttachmentView,
 )
 
 urlpatterns = [
@@ -39,4 +40,22 @@ urlpatterns = [
         "<int:task_id>/delete/",
         DeleteTaskView.as_view()
     ),
+
+    path(
+        "attachment/upload/",
+        UploadAttachmentView.as_view()
+    ),
+
+    path(
+        "attachment/task/<int:task_id>/",
+        TaskAttachmentsView.as_view()
+    ),
+
+    path(
+        "attachment/<int:attachment_id>/delete/",
+        DeleteAttachmentView.as_view()
+    ),
+
+
+
 ]
