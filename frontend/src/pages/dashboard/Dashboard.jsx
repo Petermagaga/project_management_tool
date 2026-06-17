@@ -17,27 +17,49 @@ export default function Dashboard() {
 
     <DashboardLayout>
 
-      <h1
-        className="
-        text-3xl
-        font-bold"
-      >
+<div className="grid grid-cols-4 gap-6 mt-8">
 
-        Welcome,
-        {user?.first_name ||
-         user?.username}
+  <div className="bg-white p-5 rounded-xl">
 
-      </h1>
+    <h2>Total Projects</h2>
 
-      <p
-        className="
-        text-gray-500
-        mt-2"
-      >
+    <p className="text-3xl font-bold">
+      0
+    </p>
 
-        Project overview dashboard
+  </div>
 
-      </p>
+  <div className="bg-white p-5 rounded-xl">
+
+    <h2>Total Tasks</h2>
+
+    <p className="text-3xl font-bold">
+      0
+    </p>
+
+  </div>
+
+  <div className="bg-white p-5 rounded-xl">
+
+    <h2>Completed</h2>
+
+    <p className="text-3xl font-bold">
+      0
+    </p>
+
+  </div>
+
+  <div className="bg-white p-5 rounded-xl">
+
+    <h2>Overdue</h2>
+
+    <p className="text-3xl font-bold">
+      0
+    </p>
+
+  </div>
+
+</div>
 
     </DashboardLayout>
   );

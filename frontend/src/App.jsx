@@ -15,7 +15,17 @@ from "./pages/dashboard/Dashboard";
 
 import ProtectedRoute
 from "./routes/ProtectedRoute";
+import Projects
+from "./pages/projects/Projects";
 
+import Tasks
+from "./pages/tasks/Tasks";
+
+import Activity
+from "./pages/activity/Activity";
+
+import Settings
+from "./pages/settings/Settings";
 
 function App() {
 
@@ -44,7 +54,44 @@ function App() {
         }
       />
 
-    </Routes>
+    
+
+    <Route
+      path="/projects"
+      element={
+        <ProtectedRoute>
+          <Projects />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/tasks"
+      element={
+        <ProtectedRoute>
+          <Tasks />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/activity"
+      element={
+        <ProtectedRoute>
+          <Activity />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/settings"
+      element={
+        <ProtectedRoute>
+          <Settings />
+        </ProtectedRoute>
+      }
+    />
+</Routes>
   );
 }
 
