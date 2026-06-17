@@ -56,6 +56,4 @@ urlpatterns = [
         DeleteAttachmentView.as_view()
     ),
 
-
-
 ]
