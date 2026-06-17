@@ -4,6 +4,9 @@ import {
 }
 from "react-router-dom";
 
+import ProjectDetail
+from "./pages/projects/ProjectDetail";
+
 import Login
 from "./pages/auth/Login";
 
@@ -91,6 +94,24 @@ function App() {
         </ProtectedRoute>
       }
     />
+
+<Route
+
+path="/projects/:projectId"
+
+element={
+
+<ProtectedRoute>
+
+<ProjectDetail />
+
+</ProtectedRoute>
+
+}
+
+/>
+
+
 </Routes>
   );
 }
