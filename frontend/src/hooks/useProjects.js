@@ -1,4 +1,5 @@
-import api from "./axios";
+
+import api from "../api/axios";
 
 export const getWorkspaceProjects = (workspaceId) =>
   api.get(`projects/workspace/${workspaceId}/`);
