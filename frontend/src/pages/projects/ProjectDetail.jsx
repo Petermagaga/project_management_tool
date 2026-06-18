@@ -5,6 +5,14 @@ import {
 import DashboardLayout
 from "../../layouts/DashboardLayout";
 
+import {
+  useBoards
+}
+from "../../hooks/useBoards";
+
+import BoardColumn
+from "../../components/boards/BoardColumn";
+
 export default function ProjectDetail() {
 
   const {
@@ -12,20 +20,70 @@ export default function ProjectDetail() {
   } =
     useParams();
 
-  return (
+  const {
 
-    <DashboardLayout>
+    data: boards = [],
 
-      <h1
-        className="
-        text-3xl
-        font-bold"
-      >
+    isLoading,
 
-        Project {projectId}
+  } =
+    useBoards(
+      projectId
+    );
 
-      </h1>
 
-    </DashboardLayout>
-  );
+
+    return (
+
+<DashboardLayout>
+
+<h1
+className="
+text-3xl
+font-bold
+mb-6"
+>
+
+Project Board
+
+</h1>
+
+{
+isLoading
+
+?
+
+<div>
+Loading...
+</div>
+
+:
+
+(
+<div
+className="
+flex
+gap-5
+overflow-x-auto"
+>
+
+{
+boards.map(
+(board) => (
+
+<BoardColumn
+
+key={board.id}
+
+board={board}
+
+/>
+))
+}
+
+</div>
+)
+}
+</DashboardLayout>
+);
 }

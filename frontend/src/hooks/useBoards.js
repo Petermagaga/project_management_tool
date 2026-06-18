@@ -3,32 +3,31 @@ import {
 } from "@tanstack/react-query";
 
 import {
-  getBoardTasks
-} from "../api/taskApi";
+  getProjectBoards
+} from "../api/boardApi";
 
-
-export const useTasks = (
-  boardId
+export const useBoards = (
+  projectId
 ) => {
 
   return useQuery({
 
     queryKey: [
-      "tasks",
-      boardId
+      "boards",
+      projectId
     ],
 
     queryFn: async () => {
 
       const res =
-        await getBoardTasks(
-          boardId
+        await getProjectBoards(
+          projectId
         );
 
       return res.data;
     },
 
     enabled:
-      !!boardId,
+      !!projectId,
   });
 };
