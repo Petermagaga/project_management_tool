@@ -298,3 +298,24 @@ class DeleteAttachmentView(
                 "Attachment deleted"
             }
         )
+
+
+class ProjectTaskView(generics.ListAPIView):
+
+    serializer_class= (TaskSerializer)
+
+    permission_classes=[
+        IsAuthenticated
+    ]
+
+    def get_queryset(self):
+        project_id=(
+            self.kwargs["project_id"]
+        )
+
+        return Task.objects.filter(project_id=project_id
+                                   ).select_related(
+                                       "board",
+                                       "assignee",
+                                       "reporter"
+                                   )

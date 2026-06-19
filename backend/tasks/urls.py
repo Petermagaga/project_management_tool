@@ -9,7 +9,7 @@ from .views import (
     TaskDetailView,
 
     UpdateTaskView,
-
+    ProjectTaskView,
     DeleteTaskView,
     TaskAttachmentsView,DeleteAttachmentView,UploadAttachmentView,
 )
@@ -55,5 +55,9 @@ urlpatterns = [
         "attachment/<int:attachment_id>/delete/",
         DeleteAttachmentView.as_view()
     ),
+    path(
+        "project/<int:project_id>/",
+        ProjectTaskView.as_view()
+    )
 
 ]
