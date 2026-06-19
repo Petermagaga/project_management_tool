@@ -4,7 +4,7 @@ import {
 
 import {
   useAuth
-} from "../../contexts/AuthContext";
+} from "../contexts/AuthContext";
 
 
 export default function Topbar() {

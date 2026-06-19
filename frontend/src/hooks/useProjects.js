@@ -1,27 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
 
-import api from "../api/axios";
+import {
+  getWorkspaceProjects,
+} from "../api/projectApi";
 
-export const getWorkspaceProjects = (workspaceId) =>
-  api.get(`projects/workspace/${workspaceId}/`);
+export const useProjects = (
+  workspaceId
+) => {
 
-export const getProject = (projectId) =>
-  api.get(`projects/${projectId}/`);
+  return useQuery({
 
-export const createProject = (data) =>
-  api.post("projects/create/", data);
+    queryKey: [
+      "projects",
+      workspaceId,
+    ],
 
-export const updateProject = (
-  projectId,
-  data
-) =>
-  api.put(
-    `projects/${projectId}/update/`,
-    data
-  );
+    queryFn: async () => {
 
-export const deleteProject = (
-  projectId
-) =>
-  api.delete(
-    `projects/${projectId}/delete/`
-  );
+      const res =
+        await getWorkspaceProjects(
+          workspaceId
+        );
+
+      return res.data;
+    },
+
+    enabled: !!workspaceId,
+  });
+};
