@@ -31,3 +31,10 @@ export const deleteTask = (
   api.delete(
     `tasks/${taskId}/delete/`
   );
+
+export const getProjectTasks =
+(projectId) =>
+
+api.get(
+  `tasks/project/${projectId}/`
+);
