@@ -2,6 +2,8 @@ import {
   useForm
 } from "react-hook-form";
 
+import { Draggable } from "@hello-pangea/dnd";
+
 import {
   createTask
 } from "../../api/taskApi";
@@ -9,8 +11,9 @@ import {
 export default function CreateTaskModal({
 
   boardId,
-
+  task,
   projectId,
+  index,
 
   onSuccess
 
@@ -126,5 +129,6 @@ Add Task
 </button>
 
 </form>
+
 );
 }

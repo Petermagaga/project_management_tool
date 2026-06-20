@@ -7,6 +7,12 @@ import { useProjectTasks } from "../../hooks/useProjectTasks";
 
 import BoardColumn from "../../components/boards/BoardColumn";
 
+import { DragDropContext } from "@hello-pangea/dnd";
+
+import { updateTask } from "../../api/taskApi";
+
+import { useQueryClient } from "@tanstack/react-query";
+
 export default function ProjectDetail() {
   const { projectId } = useParams();
 
@@ -18,6 +24,30 @@ export default function ProjectDetail() {
   const {
     data: tasks = [],
   } = useProjectTasks(projectId);
+
+  const queryClient = useQueryClient();
+
+  const onDragEnd = async (result) => {
+    if (!result.destination) return;
+
+    const taskId = Number(result.draggableId);
+
+    const destinationBoardId = Number(
+      result.destination.droppableId
+    );
+
+    try {
+      await updateTask(taskId, {
+        board: destinationBoardId,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["projectTasks"],
+      });
+    } catch {
+      alert("Failed to move task");
+    }
+  };
 
   // Group tasks by board
   const tasksByBoard = {};
@@ -41,15 +71,17 @@ export default function ProjectDetail() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex gap-5 overflow-x-auto">
-          {boards.map((board) => (
-            <BoardColumn
-              key={board.id}
-              board={board}
-              tasks={tasksByBoard[board.id] || []}
-            />
-          ))}
-        </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="flex gap-5 overflow-x-auto">
+            {boards.map((board) => (
+              <BoardColumn
+                key={board.id}
+                board={board}
+                tasks={tasksByBoard[board.id] || []}
+              />
+            ))}
+          </div>
+        </DragDropContext>
       )}
     </DashboardLayout>
   );

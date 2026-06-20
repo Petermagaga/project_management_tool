@@ -1,48 +1,79 @@
 import TaskCard
 from "../tasks/TaskCard";
 
+import { Droppable } from "@hello-pangea/dnd";
+
+
 export default function BoardColumn({
 
-board,
+  board,
 
-tasks
+  tasks
 
 }) {
 
-return (
+  return (
 
-<div
-className="
-bg-gray-100
-rounded-xl
-w-80
-p-4"
->
+    <Droppable
 
-<h2
-className="
-font-bold
-mb-4"
->
+      droppableId={
+        String(board.id)
+      }
 
-{board.name}
+    >
 
-</h2>
+      {(provided) => (
 
-{
-tasks.map(task => (
+        <div
 
-<TaskCard
+          ref={
+            provided.innerRef
+          }
 
-key={task.id}
+          {...provided.droppableProps}
 
-task={task}
+          className="
+          bg-gray-100
+          rounded-xl
+          p-4
+          w-80
+          min-h-[500px]"
+        >
 
-/>
+          <h2
+            className="
+            font-bold
+            mb-4"
+          >
+            {board.name}
+          </h2>
 
-))
-}
+          {tasks.map(
 
-</div>
-);
+            (
+              task,
+              index
+            ) => (
+
+              <TaskCard
+
+                key={task.id}
+
+                task={task}
+
+                index={index}
+
+              />
+            )
+          )}
+
+          {
+            provided.placeholder
+          }
+
+        </div>
+      )}
+
+    </Droppable>
+  );
 }
