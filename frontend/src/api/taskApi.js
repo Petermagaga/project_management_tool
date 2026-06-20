@@ -39,3 +39,9 @@ api.get(
   `tasks/project/${projectId}/`
 );
 
+export const getTaskAttachments =
+(taskId) =>
+
+api.get(
+`tasks/attachment/task/${taskId}/`
+);
