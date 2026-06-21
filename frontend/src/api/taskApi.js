@@ -45,3 +45,28 @@ export const getTaskAttachments =
 api.get(
 `tasks/attachment/task/${taskId}/`
 );
+
+
+export const uploadAttachment =
+(formData) =>
+
+api.post(
+
+"tasks/attachment/upload/",
+
+formData,
+
+{
+headers:{
+"Content-Type":
+"multipart/form-data"
+}
+}
+);
+
+export const deleteAttachment =
+(id) =>
+
+api.delete(
+`tasks/attachment/${id}/delete/`
+);
