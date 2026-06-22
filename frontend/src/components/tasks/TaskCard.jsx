@@ -6,11 +6,13 @@ export default function TaskCard({
 
   task,
 
-  index
-
+  index,
+  setSelectedTask
 }) {
 
   return (
+
+
 
     <Draggable
 
@@ -33,6 +35,7 @@ export default function TaskCard({
           {...provided.draggableProps}
 
           {...provided.dragHandleProps}
+          onClick={() =>setSelectedTask(task)}
 
           className="
           bg-white
