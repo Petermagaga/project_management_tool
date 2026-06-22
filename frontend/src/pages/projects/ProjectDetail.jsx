@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 
 import { useBoards } from "../../hooks/useBoards";
 import { useProjectTasks } from "../../hooks/useProjectTasks";
-
+import TaskDrawer from "../../components/tasks/TaskDrawer";
 import BoardColumn from "../../components/boards/BoardColumn";
 
 import { DragDropContext } from "@hello-pangea/dnd";
@@ -26,6 +27,12 @@ export default function ProjectDetail() {
   } = useProjectTasks(projectId);
 
   const queryClient = useQueryClient();
+
+  const [
+  selectedTask,
+  setSelectedTask
+  ] =
+  useState(null);
 
   const onDragEnd = async (result) => {
     if (!result.destination) return;
@@ -78,11 +85,21 @@ export default function ProjectDetail() {
                 key={board.id}
                 board={board}
                 tasks={tasksByBoard[board.id] || []}
+                setSelectedTask={setSelectedTask}
               />
             ))}
           </div>
         </DragDropContext>
+
+    
       )}
+
+        <TaskDrawer
+        task={selectedTask}
+        open={!!selectedTask}
+        onClose={() =>setSelectedTask(null)}
+        />
+
     </DashboardLayout>
   );
 }

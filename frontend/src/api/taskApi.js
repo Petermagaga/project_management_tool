@@ -70,3 +70,4 @@ export const deleteAttachment =
 api.delete(
 `tasks/attachment/${id}/delete/`
 );
+

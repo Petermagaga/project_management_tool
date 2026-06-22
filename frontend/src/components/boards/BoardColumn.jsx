@@ -8,7 +8,8 @@ export default function BoardColumn({
 
   board,
 
-  tasks
+  tasks,
+  setSelectedTask
 
 }) {
 
@@ -62,6 +63,7 @@ export default function BoardColumn({
                 task={task}
 
                 index={index}
+                setSelectedTask={setSelectedTask}
 
               />
             )
