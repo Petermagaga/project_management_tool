@@ -133,7 +133,7 @@ Comments
       py-3"
     >
 
-      <p>{comment.author_email}</p>
+      <p>{comment.user_email}</p>
 
       <p>{comment.content}</p>
 
