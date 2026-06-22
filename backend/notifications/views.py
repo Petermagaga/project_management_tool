@@ -107,39 +107,6 @@ class MarkNotificationReadView(
         )
     
 
-class MarkNotificationReadView(
-    APIView
-):
-
-    permission_classes = [
-        IsAuthenticated
-    ]
-
-    def put(
-        self,
-        request,
-        notification_id
-    ):
-
-        notification = get_object_or_404(
-
-            Notification,
-
-            id=notification_id,
-
-            recipient=request.user
-        )
-
-        notification.is_read = True
-
-        notification.save()
-
-        return Response(
-            {
-                "message":
-                "Notification marked read"
-            }
-        )
     
 class UnreadNotificationCountView(
     APIView
