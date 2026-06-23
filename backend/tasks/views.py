@@ -157,12 +157,23 @@ class UpdateTaskView(
         serializer.is_valid(
             raise_exception=True
         )
-
+        old_board=task.board
+        
         serializer.save()
-
-        return Response(
-            serializer.data
-        )
+        task.refresh_from_db()
+        if old_board !=task.board:
+            create_activity_log(
+                project=task.project,
+                user=request.user,
+                action_type="TASK_MOVED",
+                message=(
+                    f"{request.user.username}"
+                    f"moved task '{task.title}'"
+                    f"to'{task.board.name}'"
+                )
+            )
+        return Response(serializer.data)
+    
 
 class DeleteTaskView(
     APIView

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-
+import ActivityTimeline from "../../components/activity/ActivityTimeline";
 import DashboardLayout from "../../layouts/DashboardLayout";
 
 import { useBoards } from "../../hooks/useBoards";
@@ -99,6 +99,14 @@ export default function ProjectDetail() {
         open={!!selectedTask}
         onClose={() =>setSelectedTask(null)}
         />
+
+      <div className="mt-10">
+
+        <ActivityTimeline
+          projectId={projectId}
+        />
+
+      </div>
 
     </DashboardLayout>
   );
